@@ -3,6 +3,7 @@ import { Head, usePage } from '@inertiajs/react';
 import MyHeadingStyle1 from '../components/my-heading-style-1';
 import { MyPaginationNew } from '../components/my-pagination-new';
 import Layout from '../Layout';
+import MyNoData from '@/components/my-no-data'; // ✅ Make sure this exists
 
 const Index = () => {
     const { tableData } = usePage().props;
@@ -18,27 +19,36 @@ const Index = () => {
                         <MySearchTableData />
                     </div>
                 </div>
-                {/* News Cards */}
-                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-6">
-                    {tableData.data.map((item) => (
-                        <a
-                            href={`${item.link ? item.link : '/detail/' + item.id}`}
-                            key={item.id}
-                            className="overflow-hidden rounded-lg transition-all duration-300 hover:scale-95 hover:cursor-pointer"
-                        >
-                            <img
-                                src={`/assets/images/items/${item?.images[0].image}`}
-                                alt="image"
-                                width={200}
-                                height={300}
-                                className="aspect-[6/9] w-full rounded-lg border object-cover"
-                            />
 
-                            <h3 className="text-foreground mt-2 line-clamp-3 text-base">{item.name}</h3>
-                        </a>
-                    ))}
-                </div>
-                <MyPaginationNew />
+                {tableData?.data?.length === 0 ? (
+                    <div className="my-10">
+                        <MyNoData />
+                    </div>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-6">
+                            {tableData?.data?.map((item) => (
+                                <a
+                                    href={`${item.link ? item.link : '/detail/' + item.id}`}
+                                    key={item.id}
+                                    className="overflow-hidden rounded-lg transition-all duration-300 hover:scale-95 hover:cursor-pointer"
+                                >
+                                    <img
+                                        src={`/assets/images/items/${item?.images[0].image}`}
+                                        alt="image"
+                                        width={200}
+                                        height={300}
+                                        className="aspect-[6/9] w-full rounded-lg border object-cover"
+                                    />
+
+                                    <h3 className="text-foreground mt-2 line-clamp-3 text-base">{item.name}</h3>
+                                </a>
+                            ))}
+                        </div>
+
+                        <MyPaginationNew />
+                    </>
+                )}
             </div>
         </Layout>
     );
