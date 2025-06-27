@@ -1,9 +1,9 @@
+import { Link, usePage } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import MyHeadingStyle1 from './my-heading-style-1';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from './ui/dialog';
-import { usePage } from '@inertiajs/react';
 
 // const videos = [
 //     // Url MP4
@@ -42,7 +42,7 @@ export default function MyVideoGallery() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(() => {   
+    useEffect(() => {
         if (isOpen) {
             console.log(`Currently displaying: ${videos[currentIndex].name}`);
         }
@@ -66,14 +66,10 @@ export default function MyVideoGallery() {
             setCurrentIndex((prevIndex) => prevIndex - 1);
         }
     };
-    
 
     if (!videos || videos?.length === 0) {
-    return (
-        <div className="container mx-auto my-10 max-w-screen-2xl px-3 lg:px-20 text-center text-gray-500 dark:text-gray-300">
-        </div>
-    );
-}
+        return <div className="container mx-auto my-10 max-w-screen-2xl px-3 text-center text-gray-500 lg:px-20 dark:text-gray-300"></div>;
+    }
     return (
         <>
             <div className="container mx-auto my-10 max-w-screen-2xl px-3 lg:px-20">
@@ -142,6 +138,15 @@ export default function MyVideoGallery() {
                         </DialogContent>
                     </Dialog>
                 </div>
+                {videos.length > 4 && (
+                    <Link
+                        href="/videos"
+                        className="group relative mx-auto mt-10 mb-5 flex w-max items-center gap-2 rounded-full border border-red-500 bg-red-500 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-red-500 dark:border-red-400 dark:bg-red-500 dark:hover:bg-transparent dark:hover:text-red-400"
+                    >
+                        See More
+                        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </Link>
+                )}
             </div>
         </>
     );

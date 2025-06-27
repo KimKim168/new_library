@@ -184,6 +184,29 @@ class RuleLibraryController extends Controller
         ]);
     }
 
+     public function research_papers(Request $request)
+    {
+        $search = $request->input('search', '');
+
+        $query = Item::where('category_code', 'RESEARCH_PAPERS')->with('images');
+
+        if ($search) {
+            $query->where(function ($sub_query) use ($search) {
+                $sub_query->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('name_kh', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $tableData = $query->where('status', 'active')->paginate(40)->withQueryString();
+
+        return Inertia::render('rule-library/researchPapers/Index', [
+            'tableData' => $tableData,
+            'filters' => [
+                'search' => $search
+            ]
+        ]);
+    }
+
     public function detail($id)
     {
         $showData = Item::findOrFail($id);
