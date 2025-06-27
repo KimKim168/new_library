@@ -23,7 +23,7 @@ class RuleLibraryController extends Controller
             ->where('status', 'active')
             ->limit(6)
             ->get();
-        $videos = Item::where('category_code', 'VIDEOS')->where('status', 'active')->with('images')->get();
+        $videos = Item::where('category_code', 'VIDEOS')->where('status', 'active')->with('images')->limit(8)->get();
         // return $videos;
         return Inertia::render('rule-library/Index', [
             'slide' => $slide,
