@@ -64,7 +64,7 @@ const MyPost = () => {
                     </a>
                 ))}
             </div>
-           {newBooks.length > 6 && (
+           {newBooks.length > 11 && (
                 <Link
                     href="/new_books"
                     className="group relative mx-auto mt-10 mb-5 flex w-max items-center gap-2 rounded-full border border-red-500 bg-red-500 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-red-500 dark:border-red-400 dark:bg-red-500 dark:hover:bg-transparent dark:hover:text-red-400"
