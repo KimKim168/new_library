@@ -6,6 +6,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { Link, usePage } from '@inertiajs/react';
 import { Phone } from 'lucide-react';
 import { MyLanguage } from './my-language';
+import Switch from './my-switch';
 
 const MyTopHeader = () => {
     const getInitials = useInitials();
@@ -48,7 +49,8 @@ const MyTopHeader = () => {
                             </Link>
                         )}
                     </div>
-                    <ToggleModeSwitch />
+                    {/* <ToggleModeSwitch /> */}
+                    <Switch/>
                 </div>
             </div>
         </div>

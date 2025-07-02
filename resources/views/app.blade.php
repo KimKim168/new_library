@@ -30,7 +30,7 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name' ) }}</title>
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
 

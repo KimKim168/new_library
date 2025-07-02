@@ -59,12 +59,20 @@ const MyResearchPaper = () => {
                     </a>
                 ))}
             </div>
-            {researchPaper?.length > 11 && (
+            {researchPaper?.length >= 12 && (
+                // <Link
+                //     href="/research_papers"
+                //     className="group relative mx-auto mt-10 mb-5 flex w-max items-center gap-2 rounded-full border border-red-500 bg-red-500 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-red-500 dark:border-red-400 dark:bg-red-500 dark:hover:bg-transparent dark:hover:text-red-400"
+                // >
+                //     See More
+                //     <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+                // </Link>
                 <Link
                     href="/research_papers"
-                    className="group relative mx-auto mt-10 mb-5 flex w-max items-center gap-2 rounded-full border border-red-500 bg-red-500 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-transparent hover:text-red-500 dark:border-red-400 dark:bg-red-500 dark:hover:bg-transparent dark:hover:text-red-400"
+                    className="group relative bottom-0 z-10 mx-auto mt-10 flex w-max cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full border border-red-500 bg-red-500 px-4 py-2 font-black text-[#FFF] duration-700 ease-in-out hover:bg-[#FFF] hover:text-red-500 focus:bg-[#FFF] focus:text-red-500 active:scale-95 active:duration-0"
                 >
-                    See More
+                    <span className="absolute top-0 left-0 -z-10 h-full w-0 rounded-xl bg-[#FFF] transition-all duration-700 group-hover:w-full"></span>
+                    <span className="z-10 truncate duration-300 ease-in-out group-focus:translate-x-96 group-active:-translate-x-96">See More</span>
                     <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </Link>
             )}

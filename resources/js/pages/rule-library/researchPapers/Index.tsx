@@ -10,11 +10,11 @@ const Index = () => {
 
     return (
         <Layout>
-            <Head title="New Books" />
+            <Head title="Research Papers" />
 
             <div className="container mx-auto mt-5 mb-16 max-w-screen-2xl px-3 lg:px-20">
                 <div className="flex flex-col items-center justify-between md:flex-row">
-                    <MyHeadingStyle1 title="New Books" />
+                    <MyHeadingStyle1 title="Research Papers" />
                     <div className="mb-2 md:mb-0">
                         <MySearchTableData />
                     </div>

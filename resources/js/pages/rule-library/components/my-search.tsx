@@ -28,13 +28,13 @@ const MySearch = () => {
     }, []);
     return (
         <>
-            <div className=" bg-[#393838] ">
+            <div className=" bg-[#002349] ">
                 <div className="mx-auto max-w-screen-2xl px-3 pt-4 sm:px-10 lg:px-20 text-base font-semibold text-white sm:text-xl lg:text-2xl">One Search</div>
             </div>
             <div ref={sentinelRef} />
             <div
                 ref={headerRef}
-                className={`sticky top-0 left-0 z-50 w-full backdrop-blur-md transition-all duration-300 ease-in-out ${isSticky ? 'bg-background/50' : 'bg-[#393838]'}`}
+                className={`sticky top-0 left-0 z-50 w-full backdrop-blur-md transition-all duration-300 ease-in-out ${isSticky ? 'bg-background/50' : 'bg-[#002349]'}`}
             >
                
                 <div className="mx-auto max-w-screen-2xl flex lg:gap-10 items-center justify-center px-3 py-3 sm:px-10 lg:px-20">
