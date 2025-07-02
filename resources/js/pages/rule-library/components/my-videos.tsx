@@ -154,6 +154,10 @@ export default function MyVideoGallery() {
                         <span className="z-10 truncate duration-300 ease-in-out group-focus:translate-x-96 group-active:-translate-x-96">
                             See More
                         </span>
+                        <div className="absolute z-10 flex -translate-x-96 flex-row items-center justify-center gap-2 duration-300 ease-in-out group-focus:translate-x-0 group-active:translate-x-0">
+                            {/* Spinner animation */}
+                            <div className="size-4 animate-spin rounded-full border-2 border-red-500 border-t-transparent"></div>
+                        </div>
                         <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </Link>
                 )}
