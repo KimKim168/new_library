@@ -16,7 +16,7 @@ const Index = () => {
 
     return (
         <Layout>
-            <Head title= 'Rac Library' />
+            <Head title= 'Home' />
             <MySlide images={slide}/>
             <MySearch />
             <MyHeroSection />
