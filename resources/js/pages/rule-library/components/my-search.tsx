@@ -40,7 +40,7 @@ const MySearch = () => {
                 <div className="mx-auto max-w-screen-2xl flex lg:gap-10 items-center justify-center px-3 py-3 sm:px-10 lg:px-20">
                      {isSticky && <a href='/'><img  src={`/assets/images/application_info/${application_info?.image}`} className='w-12 lg:w-16'/></a>}
                     <form
-                        action="https://www.elibrary-rule.com/one_search"
+                        action="https://elibrary.rac.gov.kh/one_search"
                         method="GET"
                         className="flex-1 flex flex-row items-center justify-center gap-2 rounded-full border bg-white py-0 pr-0 pl-3 shadow-xl focus-within:ring-1 focus-within:ring-yellow-400"
                     >
