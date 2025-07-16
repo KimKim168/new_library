@@ -20,8 +20,7 @@ const MyNewHeader = () => {
                             {application_info?.name_kh}
                             <br />
                             <span className="font-normal"> {application_info?.name}</span>
-                        </p>
-                        
+                        </p>                        
                     </a>
                     <MyMenu />
                 </div>

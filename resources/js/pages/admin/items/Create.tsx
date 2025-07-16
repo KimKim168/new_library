@@ -23,7 +23,9 @@ import * as z from 'zod';
 
 const formSchema = z.object({
     name: z.string().min(1).max(255),
+    name_kh: z.string().min(1).max(255),
     short_description: z.string().optional(),
+    short_description_kh: z.string().optional(),
     code: z.string().max(255).optional(),
     link: z.string().max(255).optional(),
     status: z.string().optional(),
@@ -57,14 +59,17 @@ export default function Create() {
 
     const [files, setFiles] = useState<File[] | null>(null);
     const [long_description, setLong_description] = useState(editData?.long_description || '');
+    const [long_description_kh, setLong_description_kh] = useState(editData?.long_description_kh || '');
     const [editorKey, setEditorKey] = useState(0);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: editData?.name || '',
+            name_kh: editData?.name_kh || '',
             code: editData?.code || '',
             short_description: editData?.short_description || '',
+            short_description_kh: editData?.short_description_kh || '',
             link: editData?.link || '',
             status: editData?.status || 'active',
             category_code: editData?.category_code?.toString() || '',
@@ -88,6 +93,7 @@ export default function Create() {
             transform(() => ({
                 ...values,
                 long_description: long_description,
+                long_description_kh: long_description_kh,
                 images: files || null,
             }));
 
@@ -220,7 +226,7 @@ export default function Create() {
                                 )}
                             />
                         </div>
-                        <div className="col-span-12">
+                        <div className="col-span-6">
                             <FormField
                                 control={form.control}
                                 name="name"
@@ -236,21 +242,21 @@ export default function Create() {
                             />
                         </div>
 
-                        {/* <div className="col-span-6">
+                        <div className="col-span-6">
                             <FormField
                                 control={form.control}
-                                name="title_kh"
+                                name="name_kh"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>{t('Title Khmer')}</FormLabel>
+                                        <FormLabel>{t('Name Khmer')}</FormLabel>
                                         <FormControl>
-                                            <Input placeholder={t('Title Khmer')} type="text" {...field} />
+                                            <Input placeholder={t('Name Khmer')} type="text" {...field} />
                                         </FormControl>
                                         <FormMessage>{errors.title_kh && <div>{errors.title_kh}</div>}</FormMessage>
                                     </FormItem>
                                 )}
                             />
-                        </div> */}
+                        </div>
                     </div>
 
                     <FormField
@@ -263,6 +269,23 @@ export default function Create() {
                                     <AutosizeTextarea placeholder={t('Short Description')} className="resize-none whitespace-pre-line" {...field} />
                                 </FormControl>
                                 <FormMessage>{errors.short_description && <div>{errors.short_description}</div>}</FormMessage>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="short_description_kh"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{t('Short Description Kh')}</FormLabel>
+                                <FormControl>
+                                    <AutosizeTextarea
+                                        placeholder={t('Short Description Kh')}
+                                        className="resize-none whitespace-pre-line"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage>{errors.short_description_kh && <div>{errors.short_description_kh}</div>}</FormMessage>
                             </FormItem>
                         )}
                     />
@@ -465,6 +488,10 @@ export default function Create() {
                         <div>
                             <p className="mb-1 text-sm font-medium">{t('Long Description')}</p>
                             <MyCkeditor5 data={long_description} setData={setLong_description} />
+                        </div>
+                        <div>
+                            <p className="mb-1 text-sm font-medium">{t('Long Description Khmer')}</p>
+                            <MyCkeditor5 data={long_description_kh} setData={setLong_description_kh} />
                         </div>
                     </div>
 

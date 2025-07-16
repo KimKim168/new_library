@@ -141,6 +141,7 @@ class ItemController extends Controller implements HasMiddleware
         // } else {
         //     session()->flash('success', 'Item Created Successfully!.');
         // }
+        // return $validated;
         return redirect()->back()->with('success', 'Item create successfully!');
     }
 
@@ -181,7 +182,6 @@ class ItemController extends Controller implements HasMiddleware
      */
     public function update(Request $request, Item $item)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'code' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',

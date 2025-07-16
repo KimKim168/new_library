@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/use-translation';
 import { usePage } from '@inertiajs/react';
 import { MyFooterSocialTooltip } from './my-footer-social-tooltip';
 import MyScrollTop from './my-scrool-top';
@@ -47,7 +48,9 @@ const MyFooter = () => {
     const { socialMedia } = usePage().props;
     const { application_info } = usePage().props;
     // console.log(application_info);
-
+    const { t } = useTranslation();
+    const { locale } = usePage().props;
+    const fontClass = locale === 'kh' ? 'font-siemreap-regular' : '';
     const companyName = 'Powered By:';
 
     return (
@@ -57,28 +60,36 @@ const MyFooter = () => {
                 <div className="grid grid-cols-1 items-start gap-2 text-center md:grid-cols-2 md:text-left">
                     {/* Contact Info */}
                     <div>
-                        <h3 className="mb-4 text-2xl font-semibold text-white">Information</h3>
-                        <ul className="space-y-2 text-sm leading-relaxed text-white">
+                        <h3 className={`mb-4 text-xl font-semibold text-white ${fontClass}`}>{t('Contact Us')}</h3>
+                        <ul className={`space-y-2 text-sm leading-relaxed text-white ${fontClass}`}>
                             <li>
-                                <span className="font-medium">Address :</span> {application_info?.address}
+                                <span className="font-medium">{t('Address')} :</span>{' '}
+                                {locale === 'kh' ? application_info?.address_kh : application_info?.address}
                             </li>
                             <li>
-                                <span className="font-medium">Phone :</span> {application_info?.phone}
+                                <span className="font-medium">{t('Phone')} :</span>{' '}
+                                {locale === 'kh' ? (application_info?.phone_kh ?? application_info?.phone) : application_info?.phone}
                             </li>
                             <li>
-                                <span className="font-medium">Hours :</span> {application_info?.working_hours}
+                                <span className="font-medium">{t('Working Hours')} :</span>{' '}
+                                {locale === 'kh'
+                                    ? application_info?.working_hours_kh 
+                                    : application_info?.working_hours}
                             </li>
                             <li>
-                                <span className="font-medium">Working Day :</span> {application_info?.working_days}
+                                <span className="font-medium">{t('Working Days')} :</span>{' '}
+                                {locale === 'kh'
+                                    ? application_info?.working_days_kh
+                                    : application_info?.working_days}
                             </li>
-                            <li className="font-semibold text-red-400">Sunday : CLOSED</li>
+                            <li className="font-semibold text-red-400">{locale === 'kh' ? t('អាទិត្យ៖ បិទ') : 'Sunday : CLOSED'}</li>
                         </ul>
                         <hr className="mx-auto mt-4 w-20 border-t border-white md:mx-0" />
                     </div>
 
                     {/* Social Media */}
                     <div className="flex flex-col items-center md:items-end">
-                        <h3 className="mb-4 text-2xl font-semibold text-white">Social Media</h3>
+                        <h3 className={`mb-4 text-xl font-semibold text-white ${fontClass}`}>{t('Social Media')}</h3>
                         {/* <div className="flex gap-4">
                             {socialMedia?.map((item) => (
                                 <a
@@ -102,15 +113,17 @@ const MyFooter = () => {
                                 </a>
                             ))}
                         </div> */}
-                        <div className='justify-end'>
+                        <div className="justify-end">
                             <MyFooterSocialTooltip items={socialMedia} />
                         </div>
                     </div>
                 </div>
 
                 {/* Divider */}
-                <div className="pt-4 text-center text-sm text-gray-400 xl:text-end">
-                    <p>
+                <div className="pt-4 flex justify-between item-center text-sm text-gray-400 ">
+                    
+                     <div className={`${fontClass} text-sm leading-relaxed text-white`}>{locale === 'kh' ? application_info?.copyright_kh : application_info?.copyright}</div>
+                     <p>
                         {companyName}{' '}
                         <a
                             href="https://alphalib.org/"
@@ -123,7 +136,7 @@ const MyFooter = () => {
                     </p>
                 </div>
             </div>
-            <MyScrollTop/>
+            <MyScrollTop />
         </footer>
     );
 };

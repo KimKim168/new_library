@@ -1,5 +1,6 @@
 import MyNoData from '@/components/my-no-data';
 import { MySearchTableData } from '@/components/my-search-table-data';
+import useTranslation from '@/hooks/use-translation';
 import { Head, usePage } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -7,11 +8,15 @@ import { MyPaginationNew } from '../components/my-pagination-new';
 import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '../components/ui/dialog';
 import Layout from '../Layout';
+import MyHeadingStyle1 from '../components/my-heading-style-1';
 
 const Index = () => {
     const { tableData } = usePage().props;
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const { t } = useTranslation();
+    const { locale } = usePage().props;
+    const fontClass = locale === 'kh' ? 'font-siemreap-regular' : '';
 
     const videos = tableData?.data;
 
@@ -44,9 +49,9 @@ const Index = () => {
             <Head title="Videos" />
             <div className="container mx-auto mt-5 mb-16 max-w-screen-2xl px-3 lg:px-20">
                 <div className="flex flex-col items-center justify-between md:flex-row">
-                    <h2 className="text-foreground my-5 animate-bounce text-center text-2xl font-semibold tracking-wide after:mx-auto after:mt-2 after:block after:h-1 after:w-12 after:rounded-full after:bg-red-500 after:transition-all after:duration-300 after:content-[''] hover:after:w-20 md:text-2xl lg:text-3xl">
-                        Videos
-                    </h2>
+                    <div >
+                        <MyHeadingStyle1 title={t('Videos')} />
+                    </div>
                     <div className="mb-2 md:mb-0">
                         <MySearchTableData />
                     </div>
@@ -68,11 +73,11 @@ const Index = () => {
                                     setIsOpen(true);
                                 }}
                             >
-                                <div className="aspect-w-16 aspect-h-9 relative w-full overflow-hidden rounded-xl bg-black">
+                                <div className="aspect-w-16 aspect-h-9 relative w-full overflow-hidden rounded-xl">
                                     <img
                                         width={400}
                                         height={400}
-                                        src={`/assets/images/items/${item.images[0]?.image}`}
+                                        src={`/assets/images/items/thumb/${item.images[0]?.image}`}
                                         alt={item.name}
                                         className="aspect-video w-full transform object-cover transition-all duration-300 group-hover:scale-105"
                                     />
@@ -80,7 +85,7 @@ const Index = () => {
                                         <Play size={24} />
                                     </span>
                                 </div>
-                                <div className="text-foreground mt-2 text-start text-base font-medium dark:text-white">{item.name}</div>
+                                <div className={`text-foreground mt-2 text-start text-base font-medium dark:text-white ${fontClass}`}>{t(locale === 'kh' ? item.name_kh ?? item.name : item.name)}</div>
                             </div>
                         ))}
                     </div>

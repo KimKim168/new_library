@@ -9,14 +9,16 @@ import MySlide from './components/my-slide';
 import MyVideos from './components/my-videos';
 import Layout from './Layout';
 import ToggleModeSwitch from '@/components/toggle-mode-switch';
+import useTranslation from '@/hooks/use-translation';
 
 const Index = () => {
   const { slide } = usePage().props;
+  const { t } = useTranslation();
 //   console.log(slide);
 
     return (
         <Layout>
-            <Head title= 'Home' />
+             <Head title={t('Home')} />
             <MySlide images={slide}/>
             <MySearch />
             <MyHeroSection />

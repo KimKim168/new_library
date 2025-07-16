@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/use-translation';
 import { Link, usePage } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -38,7 +39,10 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from './ui/dial
 
 export default function MyVideoGallery() {
     const { videos } = usePage().props;
-    // console.log(videos);
+    const { t } = useTranslation();
+    const { locale } = usePage().props;
+    const fontClass = locale === 'kh' ? 'font-siemreap-regular' : '';
+    // console.log(videos.map(v => v.id));
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -74,31 +78,33 @@ export default function MyVideoGallery() {
         <>
             <div className="container mx-auto my-10 max-w-screen-2xl px-3 lg:px-20">
                 <div className="flex">
-                    <MyHeadingStyle1 title="Videos" />
+                    <MyHeadingStyle1 title={t('Videos')} />
                 </div>
                 <div>
                     <div className={`grid grid-cols-1 gap-2 lg:grid-cols-3 xl:grid-cols-4`}>
                         {videos?.map((item, index) => (
                             <div
-                                key={index}
+                                key={item.id}
                                 className="group cursor-pointer"
                                 onClick={() => {
                                     setCurrentIndex(index); // Set current video index
                                     setIsOpen(true); // Open the lightbox
                                 }}
                             >
-                                <div className="aspect-w-16 aspect-h-9 relative w-full overflow-hidden rounded-xl bg-black">
+                                <div className="aspect-w-16 aspect-h-9 relative w-full overflow-hidden rounded-xl">
                                     <img
                                         width={400}
                                         height={400}
-                                        src={`/assets/images/items/${item.images[0].image}`} // Replace with dynamic thumbnail if available
+                                        src={`/assets/images/items/thumb/${item.images[0].image}`} // Replace with dynamic thumbnail if available
                                         className="aspect-video w-full transform object-cover transition-all duration-300 group-hover:scale-105"
                                     />
                                     <span className="group-hover:bg-true-primary bg-true-primary/80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/50 p-2 text-white shadow-lg transition-all duration-300 group-hover:scale-110">
                                         <Play size={24} />
                                     </span>
                                 </div>
-                                <div className="text-foreground mt-2 text-start text-base font-medium">{item.name}</div>
+                                <div className={`text-foreground mt-2 text-start text-base font-medium dark:text-white ${fontClass}`}>
+                                    {t(locale === 'kh' ? item.name_kh ?? item.name  : item.name)}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -108,12 +114,16 @@ export default function MyVideoGallery() {
                             <DialogTitle className="hidden" />
                             <DialogDescription className="hidden" />
                             <div className="relative flex-grow">
-                                <iframe
-                                    src={`${getVideoUrl(videos[currentIndex].link)}?&autoplay=1`} // Ensure autoplay works on YouTube
-                                    className="h-full w-full rounded-2xl"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
+                                {videos[currentIndex]?.link ? (
+                                    <iframe
+                                        src={`${getVideoUrl(videos[currentIndex].link)}?&autoplay=1`}
+                                        className="h-full w-full rounded-2xl"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                ) : (
+                                    <p className="text-center text-white">No video available</p>
+                                )}
                             </div>
                             <Button
                                 variant="ghost"
@@ -151,8 +161,10 @@ export default function MyVideoGallery() {
                         className="group relative bottom-0 z-10 mx-auto mt-10 flex w-max cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full border border-red-500 bg-red-500 px-4 py-2 font-black text-[#FFF] duration-700 ease-in-out hover:bg-[#FFF] hover:text-red-500 focus:bg-[#FFF] focus:text-red-500 active:scale-95 active:duration-0"
                     >
                         <span className="absolute top-0 left-0 -z-10 h-full w-0 rounded-xl bg-[#FFF] transition-all duration-700 group-hover:w-full"></span>
-                        <span className="z-10 truncate duration-300 ease-in-out group-focus:translate-x-96 group-active:-translate-x-96">
-                            See More
+                        <span
+                            className={`z-10 truncate duration-300 ease-in-out group-focus:translate-x-96 group-active:-translate-x-96 ${fontClass}`}
+                        >
+                            {t('See More')}
                         </span>
                         <div className="absolute z-10 flex -translate-x-96 flex-row items-center justify-center gap-2 duration-300 ease-in-out group-focus:translate-x-0 group-active:translate-x-0">
                             {/* Spinner animation */}

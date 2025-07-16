@@ -8,9 +8,12 @@ import {
 import { Link, usePage } from '@inertiajs/react';
 import { ChevronsRight } from 'lucide-react';
 import Layout from './Layout';
+import useTranslation from '@/hooks/use-translation';
 
 export default function Introduction() {
   const { heroSection } = usePage().props;
+  const { t } = useTranslation();
+  const { locale } = usePage().props;
 
   return (
     <Layout>
@@ -19,24 +22,24 @@ export default function Introduction() {
         <Breadcrumb className="mb-8">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              <BreadcrumbLink href="/">{t('Home')}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <ChevronsRight className="h-4 w-4" />
             </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <BreadcrumbLink href={`/${heroSection?.category?.name?.toLowerCase()}`}>
-                {heroSection?.category?.name}
+            {/* <BreadcrumbItem>
+              <BreadcrumbLink href={`/${heroSection?.category?.title?.toLowerCase()}`}>
+                {heroSection?.category?.title}
               </BreadcrumbLink>
-            </BreadcrumbItem>
-            {heroSection?.name && (
+            </BreadcrumbItem> */}
+            {heroSection?.title && (
               <>
-                <BreadcrumbSeparator>
+                {/* <BreadcrumbSeparator>
                   <ChevronsRight className="h-4 w-4" />
-                </BreadcrumbSeparator>
+                </BreadcrumbSeparator> */}
                 <BreadcrumbItem isCurrentPage>
                   <BreadcrumbLink href="#" aria-current="page">
-                    {heroSection.name}
+                    {t(locale === 'kh' ? heroSection.title_kh : heroSection.title)}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </>
@@ -49,7 +52,7 @@ export default function Introduction() {
           {/* Content Area */}
           <article >
             <h1 className="mb-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
-              {heroSection?.name}
+              {t(locale === 'kh' ? heroSection.title_kh : heroSection.title)}
             </h1>
 
             {heroSection?.images?.[0]?.image && (
@@ -63,7 +66,7 @@ export default function Introduction() {
             )}
 
             <section className="prose dark:prose-invert max-w-full ck-content">
-              <div dangerouslySetInnerHTML={{ __html: heroSection?.long_description }} />
+              <div dangerouslySetInnerHTML={{ __html: t(locale === 'kh' ? heroSection?.long_description_kh : heroSection?.long_description) }} />
             </section>
           </article>
         </div>

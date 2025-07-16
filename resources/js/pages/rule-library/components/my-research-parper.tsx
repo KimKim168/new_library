@@ -1,3 +1,4 @@
+import useTranslation from '@/hooks/use-translation';
 import { Link, usePage } from '@inertiajs/react';
 import MyHeadingStyle1 from './my-heading-style-1';
 
@@ -36,26 +37,29 @@ import MyHeadingStyle1 from './my-heading-style-1';
 
 const MyResearchPaper = () => {
     const { researchPaper } = usePage().props;
+    const { t } = useTranslation();
+    const { locale } = usePage().props;
+    const fontClass = locale === 'kh' ? 'font-siemreap-regular' : '';
     return (
         <div className="container mx-auto my-10 max-w-screen-2xl px-3 lg:px-20">
             <div className="flex">
-                <MyHeadingStyle1 title="Research Papers" />
+                <MyHeadingStyle1 title={t('Research Papers')} />
             </div>
             <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6">
                 {researchPaper?.map((item) => (
                     <a
                         href={`${item.link ? item.link : '/detail/' + item.id}`}
                         key={item.id}
-                        className="overflow-hidden rounded-lg transition-all duration-300 hover:scale-95 hover:cursor-pointer"
+                        className="overflow-hidden rounded-lg transition-all  duration-300 hover:scale-95 hover:cursor-pointer"
                     >
                         <img
-                            src={`/assets/images/items/${item?.images[0].image}`}
+                            src={`/assets/images/items/thumb/${item?.images[0].image}`}
                             alt="image"
                             width={200}
                             height={300}
                             className="aspect-[6/9] w-full rounded-lg border object-cover"
                         />
-                        <h3 className="text-foreground line-clamp-3 pt-2 text-base">{item.name}</h3>
+                        <h3 className={`text-foreground line-clamp-3 pt-2 text-base ${fontClass}`}>{locale === 'kh' ? item.name_kh ?? item.name : item.name}</h3>
                     </a>
                 ))}
             </div>
@@ -72,11 +76,13 @@ const MyResearchPaper = () => {
                     className="group relative bottom-0 z-10 mx-auto mt-10 flex w-max cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full border border-red-500 bg-red-500 px-4 py-2 font-black text-[#FFF] duration-700 ease-in-out hover:bg-[#FFF] hover:text-red-500 focus:bg-[#FFF] focus:text-red-500 active:scale-95 active:duration-0"
                 >
                     <span className="absolute top-0 left-0 -z-10 h-full w-0 rounded-xl bg-[#FFF] transition-all duration-700 group-hover:w-full"></span>
-                    <span className="z-10 truncate duration-300 ease-in-out group-focus:translate-x-96 group-active:-translate-x-96">See More</span>
+                    <span className={`z-10 truncate duration-300 ease-in-out group-focus:translate-x-96 group-active:-translate-x-96 ${fontClass}`}>
+                        {t('See More')}
+                    </span>
                     <div className="absolute z-10 flex -translate-x-96 flex-row items-center justify-center gap-2 duration-300 ease-in-out group-focus:translate-x-0 group-active:translate-x-0">
-                            {/* Spinner animation */}
-                            <div className="size-4 animate-spin rounded-full border-2 border-red-500 border-t-transparent"></div>
-                        </div>
+                        {/* Spinner animation */}
+                        <div className="size-4 animate-spin rounded-full border-2 border-red-500 border-t-transparent"></div>
+                    </div>
                     <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </Link>
             )}
