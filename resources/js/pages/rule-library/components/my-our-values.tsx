@@ -40,7 +40,7 @@ const MyOurValues = () => {
             {ourValues?.map((item) => (
                 <div key={item.id} className="mx-auto flex max-w-screen-2xl flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-20">
                     <h2 className={`text-foreground my-5 text-center text-3xl font-semibold tracking-wide after:mx-auto after:mt-2 after:block after:h-1 after:w-12 after:rounded-full after:bg-yellow-400 after:transition-all after:duration-300 after:content-[''] hover:after:w-20 md:text-2xl lg:text-3xl ${fontClass}`}>
-                        {(locale === 'kh' ? item.title_kh : item.title)}
+                        {(locale === 'kh' ? (item.title_kh ?? item.title) : item.title)}
                     </h2>
                     {/* <div className="relative mt-6 h-[2px] w-full bg-gray-200">
                         <div className="absolute top-0 left-1/2 h-[2px] w-20 -translate-x-1/2 transform bg-yellow-400"></div>

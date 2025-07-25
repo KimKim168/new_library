@@ -54,88 +54,74 @@ const MyFooter = () => {
     const companyName = 'Powered By:';
 
     return (
-        <footer className="bg-[#002349] py-12 text-white">
+        <footer className="relative bg-[#002349] pt-14 pb-10 text-white">
             <div className="mx-auto max-w-screen-2xl px-4 md:px-8 xl:px-20">
-                {/* Grid layout */}
-                <div className="grid grid-cols-1 items-start gap-2 text-center md:grid-cols-2 md:text-left">
+                <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
                     {/* Contact Info */}
                     <div>
-                        <h3 className={`mb-4 text-xl font-semibold text-white ${fontClass}`}>{t('Contact Us')}</h3>
-                        <ul className={`space-y-2 text-sm leading-relaxed text-white ${fontClass}`}>
+                        <h3 className={`mb-2 text-xl font-semibold tracking-wide ${fontClass}`}>{t('Contact Us')}</h3>
+                        <ul className={`space-y-3 text-sm leading-relaxed ${fontClass}`}>
                             <li>
-                                <span className="font-medium">{t('Address')} :</span>{' '}
+                                <span className="font-medium text-white/80">{t('Address')}:</span>{' '}
                                 {locale === 'kh' ? application_info?.address_kh : application_info?.address}
                             </li>
                             <li>
-                                <span className="font-medium">{t('Phone')} :</span>{' '}
+                                <span className="font-medium text-white/80">{t('Phone')}:</span>{' '}
                                 {locale === 'kh' ? (application_info?.phone_kh ?? application_info?.phone) : application_info?.phone}
                             </li>
                             <li>
-                                <span className="font-medium">{t('Working Hours')} :</span>{' '}
-                                {locale === 'kh'
-                                    ? application_info?.working_hours_kh 
-                                    : application_info?.working_hours}
+                                <span className="font-medium text-white/80">{t('Working Hours')}:</span>{' '}
+                                {locale === 'kh' ? application_info?.working_hours_kh : application_info?.working_hours}
                             </li>
                             <li>
-                                <span className="font-medium">{t('Working Days')} :</span>{' '}
-                                {locale === 'kh'
-                                    ? application_info?.working_days_kh
-                                    : application_info?.working_days}
+                                <span className="font-medium text-white/80">{t('Working Days')}:</span>{' '}
+                                {locale === 'kh' ? application_info?.working_days_kh : application_info?.working_days}
                             </li>
-                            <li className="font-semibold text-red-400">{locale === 'kh' ? t('អាទិត្យ៖ បិទ') : 'Sunday : CLOSED'}</li>
+                            <li className="font-bold text-red-400">{locale === 'kh' ? t('អាទិត្យ៖ បិទ') : 'Sunday : CLOSED'}</li>
                         </ul>
-                        <hr className="mx-auto mt-4 w-20 border-t border-white md:mx-0" />
+                        <div className="mt-6 h-[2px] w-16 rounded-full bg-white/30"></div>
+                    </div>
+
+                    {/* Visitors */}
+                    <div className="flex flex-col items-center md:items-center">
+                        <h3 className={`mb-2 text-xl font-semibold tracking-wide ${fontClass}`}>{t('Visitors')}</h3>
+                        <a href="https://info.flagcounter.com/59pj">
+                            <img
+                                src="https://s05.flagcounter.com/count2/59pj/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
+                                alt="Flag Counter"
+                                className="rounded shadow-md"
+                            />
+                        </a>
                     </div>
 
                     {/* Social Media */}
                     <div className="flex flex-col items-center md:items-end">
-                        <h3 className={`mb-4 text-xl font-semibold text-white ${fontClass}`}>{t('Social Media')}</h3>
-                        {/* <div className="flex gap-4">
-                            {socialMedia?.map((item) => (
-                                <a
-                                    key={item.id}
-                                    href={item.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    title={item.name}
-                                    className="group flex flex-col items-center space-y-1"
-                                >
-                                    <div
-                                        className={`flex h-12 w-12 items-center justify-center rounded-full bg-gray-600 shadow-md transition-all duration-300 ${item.hoverColor}`}
-                                    >
-                                        <img
-                                            src={`/assets/images/links/${item.image}`}
-                                            alt={item.alt}
-                                            className="h-8 w-8 overflow-hidden rounded-full bg-white transition-transform duration-300 group-hover:scale-110"
-                                        />
-                                    </div>
-                                    <span className="text-sm text-gray-400 transition group-hover:text-white">{item.title}</span>
-                                </a>
-                            ))}
-                        </div> */}
-                        <div className="justify-end">
+                        <h3 className={`mb-2 text-xl font-semibold tracking-wide ${fontClass}`}>{t('Social Media')}</h3>
+                        <div className="flex flex-wrap justify-center gap-4 md:justify-end">
                             <MyFooterSocialTooltip items={socialMedia} />
                         </div>
                     </div>
                 </div>
 
-                {/* Divider */}
-                <div className="pt-4 flex justify-between item-center text-sm text-gray-400 ">
-                    
-                     <div className={`${fontClass} text-sm leading-relaxed text-white`}>{locale === 'kh' ? application_info?.copyright_kh : application_info?.copyright}</div>
-                     <p>
-                        {companyName}{' '}
+                {/* Bottom Divider */}
+                <div className="mt-2 md:mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-6 text-sm text-white/60 md:flex-row">
+                    <div className={`${fontClass} text-center md:text-left`}>
+                        {locale === 'kh' ? application_info?.copyright_kh : application_info?.copyright}
+                    </div>
+                    <div className="text-center md:text-right">
+                        Powered by:{' '}
                         <a
                             href="https://alphalib.org/"
-                            className="transition-colors duration-200 hover:text-white hover:underline"
+                            className="text-white transition-opacity duration-300 hover:text-white hover:underline"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             Alphalib
                         </a>
-                    </p>
+                    </div>
                 </div>
             </div>
+
             <MyScrollTop />
         </footer>
     );

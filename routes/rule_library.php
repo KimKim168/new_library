@@ -18,3 +18,4 @@ Route::get('/news', [RuleLibraryController::class, 'news']);
 Route::get('/new_books', [RuleLibraryController::class, 'new_books']);
 Route::get('/research_papers', [RuleLibraryController::class, 'research_papers']);
 Route::get('/videos', [RuleLibraryController::class, 'videos']);
+Route::post('/videos/{id}/increment-view', [RuleLibraryController::class, 'incrementViewCount']);

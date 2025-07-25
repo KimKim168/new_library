@@ -9,6 +9,7 @@ import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '../components/ui/dialog';
 import Layout from '../Layout';
 import MyHeadingStyle1 from '../components/my-heading-style-1';
+import axios from 'axios';
 
 const Index = () => {
     const { tableData } = usePage().props;
@@ -18,7 +19,7 @@ const Index = () => {
     const { locale } = usePage().props;
     const fontClass = locale === 'kh' ? 'font-siemreap-regular' : '';
 
-    const videos = tableData?.data;
+    const videos = tableData?.data ?? [];
 
     useEffect(() => {
         if (isOpen) {
@@ -44,12 +45,26 @@ const Index = () => {
         }
     };
 
+    const onVideoClick = (index) => {
+    setCurrentIndex(index);
+    setIsOpen(true);
+
+    const videoId = videos[index].id;
+
+    // Call backend to increment views asynchronously
+    axios.post(`/videos/${videoId}/increment-view`)
+        .catch((err) => {
+            console.error('Failed to increment view count', err);
+        });
+};
+
+
     return (
         <Layout>
             <Head title="Videos" />
             <div className="container mx-auto mt-5 mb-16 max-w-screen-2xl px-3 lg:px-20">
                 <div className="flex flex-col items-center justify-between md:flex-row">
-                    <div >
+                    <div>
                         <MyHeadingStyle1 title={t('Videos')} />
                     </div>
                     <div className="mb-2 md:mb-0">
@@ -66,12 +81,9 @@ const Index = () => {
                     <div className="grid grid-cols-1 gap-2 lg:grid-cols-3 xl:grid-cols-4">
                         {videos.map((item, index) => (
                             <div
-                                key={index}
+                                key={item.id}
                                 className="group cursor-pointer"
-                                onClick={() => {
-                                    setCurrentIndex(index);
-                                    setIsOpen(true);
-                                }}
+                                onClick={() => onVideoClick(index)}
                             >
                                 <div className="aspect-w-16 aspect-h-9 relative w-full overflow-hidden rounded-xl">
                                     <img
@@ -85,7 +97,9 @@ const Index = () => {
                                         <Play size={24} />
                                     </span>
                                 </div>
-                                <div className={`text-foreground mt-2 text-start text-base font-medium dark:text-white ${fontClass}`}>{t(locale === 'kh' ? item.name_kh ?? item.name : item.name)}</div>
+                                <div className={`text-foreground mt-2 text-start text-base font-medium dark:text-white ${fontClass}`}>
+                                    {t(locale === 'kh' ? item.name_kh ?? item.name : item.name)}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -96,12 +110,16 @@ const Index = () => {
                         <DialogTitle className="hidden" />
                         <DialogDescription className="hidden" />
                         <div className="relative flex-grow">
-                            <iframe
-                                src={`${getVideoUrl(videos[currentIndex]?.link)}?&autoplay=1`}
-                                className="h-full w-full rounded-2xl"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            />
+                            {videos[currentIndex]?.link ? (
+                                <iframe
+                                    src={`${getVideoUrl(videos[currentIndex].link)}?&autoplay=1`}
+                                    className="h-full w-full rounded-2xl"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            ) : (
+                                <p className="text-center text-white">No video available</p>
+                            )}
                         </div>
                         <Button
                             variant="ghost"

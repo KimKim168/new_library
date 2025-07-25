@@ -109,11 +109,11 @@ const MyTableData = () => {
                                     <ArrowUpDown size={16} /> {t('Body Type Code')}
                                 </span>
                             </TableHead> */}
-                            {/* <TableHead onClick={() => handleSort('total_view_counts')}>
+                            <TableHead onClick={() => handleSort('total_view_counts')}>
                                 <span className="flex cursor-pointer items-center">
                                     <ArrowUpDown size={16} /> {t('Total View')}
                                 </span>
-                            </TableHead> */}
+                            </TableHead>
                             <TableHead onClick={() => handleSort('created_at')}>
                                 <span className="flex cursor-pointer items-center">
                                     <ArrowUpDown size={16} /> {t('Created at')}
@@ -233,10 +233,10 @@ const MyTableData = () => {
                                 <TableCell>{item.category_code || '---'}</TableCell>
                                 {/* <TableCell>{item.brand_code || '---'}</TableCell>
                                 <TableCell>{item.model_code || '---'}</TableCell>
-                                <TableCell>{item.body_type_code || '---'}</TableCell>
+                                <TableCell>{item.body_type_code || '---'}</TableCell> */}
                                 <TableCell>
                                     {item.total_view_counts ? <span className="flex items-center gap-1">{item.total_view_counts}</span> : '---'}
-                                </TableCell> */}
+                                </TableCell>
                                 <TableCell className="whitespace-nowrap">
                                     {item.created_at
                                         ? new Date(item.created_at).toLocaleDateString('en-UK', {

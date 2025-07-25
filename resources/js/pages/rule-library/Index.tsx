@@ -18,7 +18,7 @@ const Index = () => {
 
     return (
         <Layout>
-             <Head title={t('Home')} />
+            <Head title={t('Home')} />
             <MySlide images={slide}/>
             <MySearch />
             <MyHeroSection />

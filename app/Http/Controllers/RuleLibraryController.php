@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Banner;
 use App\Models\Heading;
 use App\Models\Item;
+use App\Models\ItemDailyView;
 use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class RuleLibraryController extends Controller
             ->orderBy('id', 'desc')
             ->limit(8)
             ->get();
-        
+
         // return $videos;
         return Inertia::render('rule-library/Index', [
             'slide' => $slide,
@@ -71,6 +72,26 @@ class RuleLibraryController extends Controller
             ]
         ]);
     }
+
+public function incrementViewCount($id)
+{
+    $date = now()->toDateString();
+
+    $item = Item::findOrFail($id);
+
+    // Update or create daily view count
+    $view = ItemDailyView::firstOrCreate(
+        ['item_id' => $id, 'view_date' => $date],
+        ['view_counts' => 0]
+    );
+    $view->increment('view_counts');
+
+    // Increment total view count atomically
+    $item->increment('total_view_counts');
+
+    return response()->json(['success' => true]);
+}
+
     public function introduction()
     {
         $heroSection = Page::where('code', 'HOME_PAGE')->where('status', 'active')->with('images')->first();
@@ -165,7 +186,7 @@ class RuleLibraryController extends Controller
             });
         }
 
-        $tableData = $query->where('status', 'active')->orderBy('id','desc')->paginate(40)->withQueryString();
+        $tableData = $query->where('status', 'active')->orderBy('id', 'desc')->paginate(40)->withQueryString();
 
         return Inertia::render('rule-library/news/Index', [
             'tableData' => $tableData,
@@ -223,20 +244,55 @@ class RuleLibraryController extends Controller
 
     public function detail($id)
     {
+        $date = now()->toDateString();
+
+        // Get the item first
         $showData = Item::findOrFail($id);
+
+        // Update or create daily view count
+        $view = ItemDailyView::firstOrCreate(
+            ['item_id' => $id, 'view_date' => $date],
+            ['view_counts' => 0],
+        );
+        $view->increment('view_counts');
+
+        // Increment total view count
+        $showData->update([
+            'total_view_counts' => $showData->total_view_counts + 1,
+        ]);
+
+        // Related items by same category
         $relatedPosts = Item::with('category', 'images')
             ->where('id', '!=', $id)
-            ->where('category_code', $showData->category_code) // match category_code
+            ->where('category_code', $showData->category_code)
             ->where('status', 'active')
             ->orderBy('id', 'desc')
             ->limit(6)
             ->get();
+
         return Inertia::render('rule-library/Detail', [
             'showData' => $showData->load('images', 'category'),
             'relatedPosts' => $relatedPosts,
         ]);
     }
 
+    // public function show(Post $post)
+    // {
+    //     $date = now()->toDateString();
+
+    //     $view = PostDailyView::firstOrCreate(
+    //         ['post_id' => $post->id, 'view_date' => $date],
+    //         ['view_counts' => 0],
+    //     );
+
+    //     $view->increment('view_counts');
+
+    //     $post->update([
+    //         'total_view_counts' => $post->total_view_counts + 1,
+    //     ]);
+
+    //     return response()->json($post->load('created_by', 'images', 'category', 'source_detail'));
+    // }
     public function contact()
     {
         return Inertia::render('rule-library/Contact');
